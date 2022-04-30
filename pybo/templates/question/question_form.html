@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+ <!-- <a href="{{url_for('question._list') }}" class="main_index"><h2 class="border-bottom py-3 text-center font_cg"> Knowledge </h2></a>-->
+ <form method="post" class="post-form my-3">
+    {{ form.csrf_token }}
+    {% for field, errors in form.errors.items() %}
+      <div class="alert alert-danger" role="alert">
+        <strong>{{ form[field].label }}</strong>: {{ ', '.join(errors)}}
+      </div>
+    {% endfor %}
+    <div class="form-group">
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" class="form-control" name="subject" value="{{ form.subject.data or ''}}">
+    </div>
+    <div class="form-group">
+      <label for="content">Content</label>
+      <textarea id="content" class="form-control" rows="10" name="content">{{ form.conten_data or ''}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+</div>
+{% endblock %}
