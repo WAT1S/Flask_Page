@@ -1,26 +1,28 @@
 {% extends "auth.html" %}
 {% block content %}
-  <div class="container w-20">
-    <form method="post" >
-    {{ form.csrf_token }}
-    {% include "form_errors.html" %}
-      <div class="container mb-3">
-        <div claas="input-group">
-          <label for="email">Email</label>
-          <input id="email" class="form-control" type="email" name="email" value="{{ form.email.data or ''}}">
+  <div class="container d-flex justify-content-center">
+    <div class="w-20">
+      <form method="post" >
+      {{ form.csrf_token }}
+      {% include "form_errors.html" %}
+        <div class="container mb-3">
+          <div claas="input-group">
+            <label for="email">Email</label>
+            <input id="email" class="form-control" type="email" name="email" value="{{ form.email.data or ''}}">
+          </div>
         </div>
-      </div>
-      <div class="container mb-3">
-        <div claas="input-group">
-          <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" id="password">
+        <div class="container mb-3">
+          <div claas="input-group">
+            <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" id="password">
+          </div>
         </div>
-      </div>
-      <div class="container mb-3">
-        <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary">Register</button>
+        <div class="container mb-3">
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    <div>
   </div>
 {% endblock %}  

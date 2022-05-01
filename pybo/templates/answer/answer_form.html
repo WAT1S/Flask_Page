@@ -3,21 +3,9 @@
 <div class="container my-3">
   <div class="card">
     <div class="card-title bg-dark text-center text-light pt-2">
-      {% if g.user == question.user %}
-        <div class="position-relative"> 
-          <div class="d-inline-flex">
-            <h2>{{ question.subject }}</h2>  
-          </div>
-          <div class="d-inline-flex position-absolute end-0 bottom-50">
-            <a href=" {{ url_for("question.modify", question_id= question.id) }}" class="btn btn-sm btn-outline-secondary">수정</a>
-            <a href=" {{ url_for("question.delete", question_id= question.id) }}" class="btn btn-sm btn-outline-secondary">삭제</a>    
-          </div>
-        </div>
-      {% else %}
-        <div class="d-inline-flex">
-          <h2>{{ question.subject }}</h2>  
-        </div>
-      {% endif %}
+      <div class="d-inline-flex">
+        <h2>{{ question.subject }}</h2>  
+      </div>
     </div>
     <div class="card-body">
       <div class="card-text lead text-center h1">{{ question.content }}</div>
@@ -28,7 +16,7 @@
         </div>
       </div>
       <div class="card-footer my-4">
-        <form action="{{ url_for('answer.create', question_id=question.id) }}" method="post">
+        <form method="post">
           {{ form.csrf_token }}
           {% for field, errors in form.errors.items() %}
           <div class="alert alert-danger", role="alert">
@@ -37,7 +25,7 @@
           {% endfor %}
           <div class="container">
             <div class="input-group">
-              <input class="form-control" aria-describedby="input-addon" name="content" placeholder="Answer" {% if not g.user %}disabled{% endif %}>
+              <input class="form-control" aria-describedby="input-addon" name="content" placeholder="Answer" value="{{ answer.content }}">
               <button class="btn btn-outline-secondary" id="input-addon">Register</button>
             </div>
           </div>
@@ -49,22 +37,32 @@
   <h6 class="border-bottom py-2">{{ question.answer_set|length }} answer</h6>
   <div class="container">
     {% for answer in question.answer_set %}
-      <div class="d-flex ustify-content-start mb-4 p_wra">
+      {% if %}
+      <div class="d-flex ustify-content-start mb-4 p_wra border">
         <div>
         <img src="{{ url_for('static', filename="user.png") }}">
         </div>
         <div style="width:100%">
           <div class="position-relative">
-            <h5 class="d-inline-flex">{{ answer.user.username }}</h5>
-            <div class="position-absolute end-0 top-0">
-              <a href="{{ url_for("answer.modify", answer_id=answer.id )}}" class="link_cont"><span class="glyphicon glyphicon-pencil" style="font-size:20px;"></span><a>
-              <a href="{{ url_for("answer.modify", answer_id=answer.id )}}" class="link_cont"><span class="glyphicon glyphicon-remove" style="font-size:20px;"></span><a>
-            </div>
+            <h5 class="d-inline-flex border">{{ answer.user.username }}</h5>
           </div>
           <p>{{ answer.content }}</p>
         </div>
       </div>
-      {% endfor %}
+      {% else %}
+      <div class="d-flex ustify-content-start mb-4 p_wra ">
+        <div>
+        <img src="{{ url_for('static', filename="user.png") }}">
+        </div>
+        <div style="width:100%">
+          <div class="position-relative">
+            <h5 class="d-inline-flex border">{{ answer.user.username }}</h5>
+          </div>
+          <p>{{ answer.content }}</p>
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
     </div>
 </div>
 {% endblock %}

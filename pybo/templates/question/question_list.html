@@ -3,23 +3,25 @@
 <div class="container my-3">
   <table class="table">
     <thead>
-      <tr class="table-dark">
+      <tr class="text=center table-dark">
         <th>Number</th>
-        <th>Subject</th>
+        <th style="width:50%">Subject</th>
+        <th>Writer</th>
         <th>Create_date</th>
       </tr>
     </thead>   
     <tbody>
     {% if question_list %}  
     {% for question in question_list.items %}  
-      <tr>
-        <td> {{ loop.index }} </td>
-        <td>
+      <tr class="text-center">
+        <td> {{ (( question_list.per_page * question_list.page ) - question_list.per_page ) + loop.index }} </td>
+        <td class="text-left">
           <a class="link_cont" href="{{ url_for('question.detail', question_id = question.id) }}">{{ question.subject }} </a>
         {% if question.answer_set|length > 0 %}
           <span class="small text-danger ml-5">{{ (question.answer_sel|length + 1) }}</span>
         {% endif %}
         </td>
+        <td> {{ question.user.username }} </td>
         <td> {{ question.create_date|datetime }}</td>
       </tr>
     {% endfor %}  
