@@ -30,17 +30,15 @@ body{
   color:rgba(6, 255, 43, 0.574);
 }
 
-.p_wra{
-  white-space:normal;
-}
+.p_wra{white-space:normal;}
 
-.h_225{
-  height:150px;
-}
+/* height */
+.h_225{height:150px;}
+.h_300{height:300px;}
 
-.w-20{
-  width:800px;
-}
+/* width */
+.w-20{width:800px;}
+
 
 .st_s{
   font-size:80px;
