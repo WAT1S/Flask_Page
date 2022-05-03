@@ -34,11 +34,12 @@ body{
 
 /* height */
 .h_225{height:150px;}
-.h_300{height:300px;}
+.h_270{height:270px;}
+.h_40{height:40px;}
 
 /* width */
 .w-20{width:800px;}
-
+.w_100pro{width:100%;}
 
 .st_s{
   font-size:80px;

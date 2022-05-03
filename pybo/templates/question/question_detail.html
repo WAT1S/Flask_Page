@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 {% block content %} 
-<div class="container">
+<div class="container-md">
+  {% for message in get_flashed_messages() %}
+    <div class="alert alert-danger" role="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
   <div class="card">
     <div class="card-title pb-2 border-bottom">
-      <div class="container">
+      <div class="container-md">
         <div class="row h_80 ">
           <div class="col-1 col-md-1 text-center pe-0 mt-2 pt-1">
           <a href="{{ url_for("main.index") }}" class="link_cont"><span class="glyphicon glyphicon-chevron-left h4"></span></a>
@@ -11,7 +16,7 @@
           <div class="col-9 col-md-9">
             <div class="d-inline-flex">
               <div class="flex-shring-0 mt-2">
-                <img src="{{ url_for('static', filename="user.png") }} " style="width:2.5rem;">
+                <img src="{{ url_for('static', filename='user.png') }} " style="width:2.5rem;">
               </div>
               <div class="lh-1 mt-2 pt-1 ms-2">
                 <div class="align-self-start d-inline-flex lead">{{ question.user.username }}</div><br>
@@ -27,54 +32,90 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a href=" {{ url_for("question.modify", question_id= question.id) }}" class="dropdown-item">수정</a></li>  
-                <li><a href=" {{ url_for("question.delete", question_id= question.id) }}" class="dropdown-item">삭제</a></li>  
+                <li><a href=" {{ url_for('question.delete', question_id= question.id) }}" class="dropdown-item">삭제</a></li>  
               </ul>
             </div>
           </div>
           {% endif %}
         </div>
       </div>
-    </div> 
-    <div class="card-body h_300 overflow-scroll">
+    </div>  <!--cardtitle--> 
+    <div class="card-body h_270 overflow-scroll">
       <div class="container-md">
         <div class="card-text text-center">{{ question.content }}</div>
       </div>
     </div>  
-  </div>
+    <div class="card-footer h_40 bg-white">
+      <p>{{ question.voter|length}} Like it</p>
+    </div> <!--cardbody-->
+  </div> <!--card-->
   <div class="container">
-    <div class="row align-items-start text-center pt-2 border">
-      <div class="col border-end">
-        <span class="glyphicon glyphicon-thumbs-up">좋아요</span>
+    <div class="row align-items-start text-center">
+
+      
+      <div class="col bg-primary border border-white rounded-3">
+        <a class="btn btn-primary recommend" href="#" data-uri="{{ url_for('vote.question', question_id=question.id) }}">
+          <p class="mb-0">좋아요 <span class="glyphicon glyphicon-thumbs-up"></span></p>     
+        </a>
       </div>
-      <div class="col border-end">
-        <span class="glyphicon glyphicon-comment">답글달기</span>
+
+      
+      <div class="col bg-primary border border-white rounded-3">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+    <p class="mb-0">답글 달기 <span class="glyphicon glyphicon-comment small"></span></p>
+        </button>
       </div>
-      <div class="col ">
-        <span class="glyphicon glyphicon-share-alt">공유하기</span>
-      </div>
-    </div>
   </div>
-  <br>
-  <h6 class="border-bottom py-2">{{ question.answer_set|length }} answer</h6>
-  <div class="container">
-    {% for answer in question.answer_set %}
-      <div class="d-flex ustify-content-start mb-4 p_wra">
-        <div>
-        <img src="{{ url_for('static', filename="user.png") }}">
-        </div>
-        <div style="width:100%">
-          <div class="position-relative">
-            <h5 class="d-inline-flex">{{ answer.user.username }}</h5>
-            <div class="position-absolute end-0 top-0">
-              <a href="{{ url_for("answer.modify", answer_id=answer.id )}}" class="link_cont"><span class="glyphicon glyphicon-pencil" style="font-size:20px;"></span><a>
-              <a href="{{ url_for("answer.delete", answer_id=answer.id )}}" class="link_cont"><span class="glyphicon glyphicon-remove" style="font-size:20px;"></span></a>
-            </div>
+    <div class="collapse" id="collapseWidthExample">
+      <div class="card card-body" style="width: 100%;">
+        <form action="{{ url_for('answer.create', question_id=question.id) }}" method="post">
+        {{ form.csrf_token }}
+        {% for field, errors in form.errors.items() %}
+          <div class="alert alert-danger", role="alert">
+            <string>{{ form[field].label }}</string>{{ ',' .join(errors)}}
           </div>
-          <p>{{ answer.content }}</p>
+          {% endfor %}
+          <div class="input-group">
+            <input class="form-control" aria-describedby="input-addon" name="content" placeholder="Answer" {% if not g.user %}disabled{% endif %}>
+              <button class="btn btn-outline-secondary" id="input-addon">Register</button>
+          </div>
+        </form>
+    </div>
+  </div>
+  <h6 class="border-bottom pt-4 mb-0 bb-0">{{ question.answer_set|length }} answer</h6>
+  {% for answer in question.answer_set %}
+  
+  <div class="row bb-2 container px-0 mx-0">
+    <div class="col border-bottom">
+      <div class="d-inline-flex">
+        <div class="flex-shring-0">
+          <img src="{{ url_for('static', filename='user.png') }} " style="width:1.5rem;">
+        </div>
+        <div class="lh-1 pt-1" style="word-break:break-all;">
+          <div class="align-self-start d-inline-flex">{{ answer.user.username }}</div><br>
+          <div class="align-self-end d-inline-flex small">{{ answer.content }}</div>
         </div>
       </div>
-      {% endfor %}
     </div>
+      
+    {% if g.user %}
+      <div class="col-2 col-md-1 border-bottom border-end ">
+        <div class="btn-group dropdown d-inline-flex">
+          <a class="btn btn-white" role="button" id="ansrd" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="
+glyphicon glyphicon-th-list small"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href=" {{ url_for('answer.modify', answer_id= answer.id) }}" class="dropdown-item">수정</a></li>  
+            <li><a href="{{ url_for('answer.delete', answer_id= answer.id) }}" class="dropdown-item">삭제</a></li>  
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+    </div>  <!--row-->
+  {% endfor %}
+
+    
 </div>
 
 
