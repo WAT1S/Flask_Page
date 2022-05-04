@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" >
+    <title>Hello, Pybo!</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row h_225">
+      <div class="col-12 align-self-end justify-content-center"><a class="st_s" href="{{ url_for('main.index') }}"><P class="text-center st_s link_">Pybo</P></a>
+      </div>
+    </div>
+    {% block content %}
+
+    {% endblock %}
+  </div>
+  <script src="{{ url_for('static', filename='jquery-3.6.0.js') }}" ></script>
+  <script src="{{ url_for('static', filename='bootstrap.min.js') }}" ></script>
+</body>
+</html>

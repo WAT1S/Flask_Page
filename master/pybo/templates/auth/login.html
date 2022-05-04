@@ -1,0 +1,29 @@
+{% extends "auth.html" %}
+{% block content %}
+  <div class="container d-flex justify-content-center">
+    <div class="w-20">
+      <form method="post" >
+      {{ form.csrf_token }}
+      {% include "form_errors.html" %}
+        <div class="container mb-3">
+          <div claas="input-group">
+            <label for="email">Email</label>
+            <input id="email" class="form-control" type="email" name="email" value="{{ form.email.data or ''}}">
+          </div>
+        </div>
+        <div class="container mb-3">
+          <div claas="input-group">
+            <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" id="password">
+          </div>
+        </div>
+        <div class="container mb-3">
+          <div class="d-flex justify-content-end">
+            <a href="{{ url_for('auth.signup' )}}" class="btn btn-primary border-white">계정생성</a>
+            <button type="submit" class="btn btn-primary border-white">로그인</button>
+          </div>
+        </div>
+      </form>
+    <div>
+  </div>
+{% endblock %}  
