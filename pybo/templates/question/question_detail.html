@@ -31,7 +31,7 @@
                 <span class="glyphicon glyphicon-plus small"></span>
               </a>
               <ul class="dropdown-menu">
-                <li><a href=" {{ url_for("question.modify", question_id= question.id) }}" class="dropdown-item">수정</a></li>  
+                <li><a href=" {{ url_for('question.modify', question_id= question.id) }}" class="dropdown-item">수정</a></li>  
                 <li><a href=" {{ url_for('question.delete', question_id= question.id) }}" class="dropdown-item">삭제</a></li>  
               </ul>
             </div>

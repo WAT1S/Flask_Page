@@ -16,8 +16,9 @@
   {% endblock %}
   <script src="{{ url_for('static', filename='jquery-3.6.0.js') }}" ></script>
   <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}" ></script>
-  {% block script %}
   <script type="text/javascript">
+    $(".pc_time").hide();
+    $(".mobile_time").show();
     $(document).ready(function(){
       $(".delete").on("click", function(){
         if(confirm("정말로 삭제하시겠습니까?")){
@@ -30,10 +31,11 @@
           location.href = $(this).data("uri");
         };
       });
-
-      
     });
-    </script>
-  {% endblock%}
+  
+  </script>
+  {% block script %}
+    
+  {% endblock %} 
 </body>
 </html>

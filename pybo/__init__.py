@@ -32,5 +32,6 @@ app.register_blueprint(answer_views.bp)
 app.register_blueprint(auth_views.bp)
 app.register_blueprint(vote_views.bp)
 
-from .filters import format_datetime
+from .filters import format_datetime, format_dateymdtime
 app.jinja_env.filters["datetime"] = format_datetime
+app.jinja_env.filters["dateymdtime"] = format_dateymdtime
